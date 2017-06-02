@@ -1,0 +1,3 @@
+5.
+
+select s.max(net_salary),s.min(net_salary),e.designation from salary s,employee e where s.emp_Id=e.emp_Id group by designation;

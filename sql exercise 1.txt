@@ -1,0 +1,33 @@
+
+1.
+
+select department_name,sum(salary) "Sum of salaries" from employee group by department_name;
+
+
+2.
+
+select emp_Name,department_name from employee where sex='Male' group by department_name having max(salary);
+
+3.
+
+select emp_Name,age,salary,department_name from employee where salary>(select avg(salary) from employee);
+
+4.
+
+select department_name, max(salary) "max salary", min(salary) "min salary" from employee group by department_name;
+
+5.
+
+select count(Employee_Id),Department_name from employee where salary<(select avg(salary) from employee group by department_name);
+
+6.
+
+select * from employee where emp_Name LIKE 'A%' OR emp_Name LIKE 'T%' OR emp_Name LIKE 'S%' AND age between 20 and 25 and department_name LIKE '%R%';
+
+7.
+
+select emp_Name,count(sex) from employee where Age=(select max(age) from employee) groupby sex,department_name; 
+
+8.
+
+select * from employee where exists( select Emp_Id,count(*) from employee group by emp_Id having count(*)>2);

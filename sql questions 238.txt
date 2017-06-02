@@ -1,0 +1,138 @@
+1.	Select * from emp;
+
+2.	select Distinct(Job) from emp;
+
+3.	select * from emp order by sal;
+
+4.	select * from emp order by deptno,job desc;
+
+5.	select Distinct(job) from emp order by desc;
+
+6.	select * from emp where empno in (select mgr from emp);
+
+7.	select * from emp where hiredate<('01-Jan-81');	
+
+8.	select empno,ename,sal,sal/30 from emp order by 12*sal;
+
+9.	select empno,ename,job,hiredate,months_between(sysdate-hiredate) "Experience" from emp where empno in (select mgr from emp);
+
+10.	select empno,ename,sal,months_between(sysdate-hiredate) "Experience" from emp where mgr=7369;
+
+11.	select * from emp where comm>sal;
+
+12.	select * from emp where hiredate>('30-Jun-1981') order by JOB;
+
+13.	select empno,ename,job,hiredate,sal,months_between(sysdate-hiredate) "experience" from emp where sal/30>100;
+
+14.	select * from emp where job='CLERK' OR job='ANALYST' order by job desc;
+
+15.	select * from emp where hiredate in ('1-MAY-81','3-DEC-81','17-DEC-81','19-JAN-80') order by hiredate asc;
+
+16.	select * from emp where deptno=10 OR deptno=20;
+
+17.	select * from emp where hiredate between '01-Jan-1981' AND '31-Dec-1981';
+
+18.	select * from emp where hiredate between '01-Aug-1980' AND '31-Aug-1980';
+
+19.	select 12*sal "annual sal" from emp where sal between 22000 AND 45000;
+
+20.	select ename from emp where length(ename) =5;
+
+21.	select ename from emp where ename like 'S%' AND length(ename)=5;
+
+22.	select ename from emp where ename like '__r%' AND length(ename)=4;
+
+23.	select ename from emp where ename like 'S%H' AND length(ename)=5;
+
+24.	select * from emp where to_char(hiredate,'mon')='jan';
+
+25.	select * from emp where to_char(hiredate,'mon') LIKE '_a%';
+
+26.	select * from emp where length(sal)=4 and sal like '%0';
+
+27.	select * from emp where ename like '%LL%';
+
+28.	select * from emp where to_char(hiredate,'YY')=80;
+
+29.	select * from emp where deptno NOT IN (20);
+
+30.	select * from emp where job not in ('PRESIDENT','MGR') order by sal asc;
+
+31.	select * from emp where to_char(hiredate,'YY')>81 and to_char(hiredate,'YY')<81;
+				OR
+	select * from emp where to_char(hiredate,'YYYY') not in (1981);
+
+32.	select * from emp where empno not like '78%';
+
+33.	select e.ename,m.ename from emp e,emp m where e.empno=m.mgr;
+
+34.	select * from emp where to_char(hiredate,'mon') not in ('mar');
+
+35.	select * from emp where job='clerk' and deptno=20;
+
+36.	select * from emp where (deptno=10 or deptno=30) and to_char(hiredate,'YYYY')=1981;
+
+37.	select * from emp where ename='SMITH';
+
+38.	select d.loc,e.ename from emp e, dept d where e.deptno=d.deptno;
+
+39.	select * from emp e, dept d where e.deptno=d.deptno and job in('ACCOUNTING','RESEARCH') order by Deptno;
+
+40.	select e.Empno, e.Ename, e.Sal, d.Dname from emp e,dept d where e.deptno=d.deptno AND d.loc in ('NEWYORK','DALLAS') AND e.empno in(
+	select e.empno from emp e where e.job in ('MGR','ANALYST') and (months_between(sysdate,e.hiredate)/12)>7 and e.comm is null) order by d.loc;
+
+41.	select e.empno,e.ename,e.sal,d.dname,d.loc,d.deptno,e.job where e.deptno=d.deptno and (d.loc='CHICAGO' or e.job='ACCOUNTING') and e.empno in (
+	select e.empno from emp e where (12*e.Sal)>28000 and e.sal not in (3000,2800) and e.job<>'MGR' 
+	and (e.empno like '_ _ 7%'or e.empno like '_ _ 8%')) order by d.deptno,e.job desc;
+
+42.	select * from emp e,salgrade s where e.sal between s.losal and s.hisal order by s.grade;
+
+43.	select * from emp e,salgrade s where e.sal between s.losal and s.hisal and s.grade in (1,2);
+
+44.	select * from emp e,salgrade s where e.sal between s.losal and s.hisal and s.grade in (4,5) and e.job in ('MGR','ANALYST');
+
+45.	select e.empno,e.Ename,e.Sal,d.Dname,s.Grade,months_between(sysdate,e.hiredate)/12 "Exp",(12*e.sal)"AnnSal" from emp e,dept d,
+	salgrade s where e.deptno=d.deptno and e.sal between s.losal and s.hisal and e.deptno in(10,20);
+
+46.	select * from emp e,dept d,salgrade s where e.deptno=d.deptno and e.sal between s.losal and s.hisal and s.grade in (2,3,4) and d.deptno in(
+	select d.deptno,d.dname from dept d where d.dname not like 'OP%' and d.dname not like '%S') and e.empno in(select e.empno from emp e where e.job like '%a%' 
+	and to_char(e.hiredate,'YYYY')=1981 and to_char(e.hiredate,'mon') not in ('mar','sep') and e.sal not like '%00') order by s.grade;
+
+47.	select * from emp e,dept d where e.deptno(+)=d.deptno;	
+
+48.	select * from emp where sal>(select sal from emp where ename='BLAKE');
+
+49.	select * from emp where job=(select job from emp where ename='ALLEN');
+
+50.	select * from emp where hiredate<(select hiredate from emp where ename='KING');
+
+51.	select * from emp e,emp m where e.empno=m.mgr and e.hiredate>m.hiredate;
+
+52.	select * from emp where deptno=20 and job=(select job from emp where deptno=10);
+				OR
+	select * from emp e,dept d where e.deptno=d.deptno and d.deptno=20 and e.job in(
+	select e.job from emp e,dept d where e.deptno=d.deptno and d.deptno=10);
+
+53.	select * from emp where sal=(select sal from emp where ename in ('FORD','SMITH')) order by sal desc;
+
+54.	select * from emp where sal>(select sal from emp where ename='ALLEN') and job=(select job from emp where ename='MILLER');
+
+55.	select * from emp where sal>(select sum(nullif(comm,comm+sal) from emp);
+
+57.	select * from emp e where e.deptno in (select d.deptno from dept d where d.dname in ('ACCOUNTING','RESEARCH)) and e.sal > (
+	select sal from emp where ename='ALLEN') and e.hiredate<(select hiredate from emp where ename='SMITH') and e.empno in (
+	select e.empno from emp e,salgrade s where e.sal between s.losal and s.hisal and s.grade in(3,4)) order by e.hiredate desc;
+
+58.	select * from emp where job in (select job from emp where ename='SMITH' or ename='ALLEN');
+
+60.	select e.job from emp e where e.deptno=10 and e.job not in(
+	select job from emp where deptno=20);
+
+61.	select * from emp1 e1 LEFT JOIN emp2 e2 where e1.emp_id=e2.empid;
+
+62.	select max(sal) from emp;
+
+63.	select * from emp where sal=(select max(sal) from emp);
+
+64.	select ename,job from emp where sal=(select max(sal) from emp where job='SALES');
+	  		
